@@ -5,6 +5,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
+import Navbar from "@/components/Navbar";
+
 
 
 const geistSans = Geist({
@@ -31,8 +33,8 @@ export default function RootLayout({
     <ClerkProvider>
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <main className="container">
-          <Header/>
+        <main className="mx-auto max-w-7xl sm:px-6 lg:px-8 bg-gray-200">
+          <Navbar/>
         {children}
         </main>
         <ToastContainer/>

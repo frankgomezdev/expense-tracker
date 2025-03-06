@@ -1,21 +1,30 @@
 import getIncomeExpense from "@/app/actions/getIncomeExpense"
 import { addCommas } from "@/lib/utils";
 
-const IncomeExpense = async () => {
-    const { income, expense } = await getIncomeExpense();
+  
+  function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(' ')
+  }
+  
+  export default async function IncomeExpense() {
+    const { income = 0, expense = 0 } = await getIncomeExpense();
 
-  return (
-    <div className="inc-exp-container">
-        <div>
-            <h4>Income</h4>
-            <p className="money plus">{ addCommas(Number(income?.toFixed(2))) }</p>
-        </div>
-        <div>
-            <h4>Expense</h4>
-            <p className="money minus">{ addCommas(Number(expense?.toFixed(2))) }</p>
-        </div>
+    const stats = [
+        { name: 'Income', value: `$${addCommas(income)}`, change: '', changeType: 'positive' },
+        { name: 'Expenses', value: `$${addCommas(expense)}`, change: '', changeType: 'negative' },
+      ];
+
+    return (
+      <div>
+      <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        {stats.map((item) => (
+          <div key={item.name} className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow-sm sm:p-6">
+            <dt className="truncate text-sm font-medium text-gray-500">{item.name}</dt>
+            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{item.value}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
-  )
-}
-
-export default IncomeExpense
+    )
+  }
+  
